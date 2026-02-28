@@ -1,0 +1,192 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap");
+@import "tailwindcss";
+
+:root {
+  --milkman-primary: #8b1e2d;
+  --milkman-primary-dark: #6f1824;
+  --milkman-light-blue: #38bdf8;
+  --milkman-light-blue-dark: #0ea5e9;
+  --milkman-light-brown: #c4a484;
+  --milkman-bg: #ffffff;
+  --milkman-text: #000000;
+  --milkman-text-secondary: #333333;
+  --milkman-border: #eaeaea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Montserrat", sans-serif;
+  background: var(--milkman-bg);
+  color: var(--milkman-text);
+}
+
+.font-serif {
+  font-family: "Montserrat", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.text-secondary {
+  color: var(--milkman-text-secondary);
+}
+
+.input-field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--milkman-border);
+  background-color: #ffffff;
+  padding: 0.58rem 0.78rem;
+  font-size: 0.92rem;
+  color: var(--milkman-text);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-field:focus {
+  border-color: var(--milkman-light-blue);
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.22);
+}
+
+.btn-primary {
+  border-radius: 0.75rem;
+  background: var(--milkman-primary);
+  color: #ffffff;
+  border: 1px solid var(--milkman-primary);
+  font-weight: 600;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: var(--milkman-primary-dark);
+  border-color: var(--milkman-primary-dark);
+}
+
+.btn-secondary {
+  border-radius: 0.75rem;
+  border: 1px solid var(--milkman-light-blue);
+  color: var(--milkman-light-blue-dark);
+  background: #ffffff;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background: var(--milkman-light-blue);
+  color: #ffffff;
+}
+
+.btn-accent {
+  border-radius: 0.75rem;
+  border: 1px solid var(--milkman-light-brown);
+  color: #ffffff;
+  background: var(--milkman-light-brown);
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.btn-accent:hover {
+  opacity: 0.9;
+}
+
+.btn-dark {
+  border-radius: 0.75rem;
+  border: 1px solid #000000;
+  background: #000000;
+  color: #ffffff;
+  font-weight: 600;
+  transition: opacity 0.2s ease;
+}
+
+.btn-dark:hover {
+  opacity: 0.88;
+}
+
+.card-surface {
+  border: 1px solid var(--milkman-border);
+  background: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s ease;
+}
+
+.card-surface:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.badge-primary {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background: var(--milkman-light-brown);
+  color: #ffffff;
+  padding: 0.18rem 0.55rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.nav-link {
+  position: relative;
+  border-radius: 0.75rem;
+  padding: 0.45rem 0.2rem;
+  color: #000000;
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 2px;
+  border-radius: 99px;
+  background: var(--milkman-light-blue);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.nav-link-active::after {
+  transform: scaleX(1);
+}
+
+.modal-panel {
+  border-radius: 0.75rem;
+  border: 1px solid var(--milkman-border);
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pill-btn {
+  border-radius: 0.75rem;
+  border: 1px solid var(--milkman-light-blue);
+  padding: 0.42rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--milkman-light-blue-dark);
+  background-color: #ffffff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pill-btn:hover {
+  background: var(--milkman-light-blue);
+  color: #ffffff;
+}
+
+.pill-btn-danger {
+  border-radius: 0.75rem;
+  border: 1px solid #000000;
+  padding: 0.42rem 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #000000;
+}
+
+#root {
+  min-height: 100vh;
+}
