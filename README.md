@@ -54,6 +54,11 @@ Password: strongpassword123
 
 ---
 
+🖼️Sequence Diagram
+=======================
+![sequence_diagram_page-0001](https://github.com/user-attachments/assets/2659b0ed-c442-4ebc-ab0f-9fda955abd7c)
+
+
 ## 🏠 Home Page
 
 <img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/c6a75cfb-dd46-42c9-bce1-e30ef18b8fdd" />
