@@ -1,0 +1,40 @@
+sequenceDiagram
+    participant U as User
+    participant F as Frontend (React)
+    participant A as API Server (Django)
+    participant DB as Database
+
+    U->>F: Open app and navigate to login
+    F->>U: Display login form
+    U->>F: Enter credentials
+    F->>A: POST /api/auth/login/ (username, password)
+    A->>DB: Query user credentials
+    DB-->>A: User data
+    A->>A: Validate password, generate JWT tokens
+    A-->>F: Return access & refresh tokens
+    F->>F: Store tokens in localStorage
+    F-->>U: Redirect to dashboard
+
+    U->>F: Browse products
+    F->>A: GET /api/products/items/
+    A->>DB: Query products
+    DB-->>A: Product list
+    A-->>F: Return products
+    F-->>U: Display products
+
+    U->>F: Select product for subscription
+    F->>U: Show subscription form
+    U->>F: Enter subscription details
+    F->>A: POST /api/subscriptions/ (product_id, schedule, etc.)
+    A->>DB: Insert subscription record
+    DB-->>A: Confirmation
+    A-->>F: Return subscription data
+    F-->>U: Show success message
+
+    Note over U,F: Optional: Payment if required
+    U->>F: Proceed to payment
+    F->>A: POST /api/payments/ (amount, method)
+    A->>DB: Create payment record
+    DB-->>A: Payment ID
+    A-->>F: Return payment details
+    F-->>U: Display payment confirmation

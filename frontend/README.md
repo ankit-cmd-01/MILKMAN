@@ -17,8 +17,11 @@ npm run dev
 
 Optional environment:
 ```bash
-VITE_API_BASE_URL=http://127.0.0.1:8000/api
+VITE_API_BASE_URL=/api
+VITE_BACKEND_PROXY_TARGET=http://127.0.0.1:8000
 ```
+
+Development now uses the Vite proxy, so the frontend can call `/api` locally and in production without hardcoding the backend host.
 
 ## Core Pages
 - `/` Home

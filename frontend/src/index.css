@@ -161,6 +161,30 @@ body {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
 
+.auth-tab-button {
+  flex: 1 1 0;
+  border: 0;
+  border-radius: 0.75rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.auth-tab-button-active {
+  background: var(--milkman-primary);
+  color: #ffffff;
+}
+
+.auth-tab-button-inactive {
+  background: transparent;
+  color: var(--milkman-text-secondary);
+}
+
+.auth-tab-button-inactive:hover {
+  background: rgba(139, 30, 45, 0.08);
+}
+
 .pill-btn {
   border-radius: 0.75rem;
   border: 1px solid var(--milkman-light-blue);

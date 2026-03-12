@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { analyticsApi, paymentApi, productApi, subscriptionApi } from "../api/services";
 import { useToast } from "../context/ToastContext";
@@ -7,7 +7,6 @@ function AdminDashboard() {
   const { pushToast } = useToast();
   const [dashboard, setDashboard] = useState(null);
   const [demand, setDemand] = useState([]);
-  const [growth, setGrowth] = useState([]);
   const [subscriptions, setSubscriptions] = useState([]);
   const [payments, setPayments] = useState([]);
   const [products, setProducts] = useState([]);
@@ -27,7 +26,6 @@ function AdminDashboard() {
     const [
       dashboardResponse,
       demandResponse,
-      growthResponse,
       subscriptionsResponse,
       paymentsResponse,
       productsResponse,
@@ -35,7 +33,6 @@ function AdminDashboard() {
     ] = await Promise.all([
       analyticsApi.dashboard(),
       analyticsApi.demand(),
-      analyticsApi.growth(),
       subscriptionApi.list(),
       paymentApi.list(),
       productApi.list(),
@@ -44,7 +41,6 @@ function AdminDashboard() {
 
     setDashboard(dashboardResponse.data);
     setDemand(demandResponse.data);
-    setGrowth(growthResponse.data);
     setSubscriptions(subscriptionApi.normalizeList(subscriptionsResponse.data));
     setPayments(paymentApi.normalizeList(paymentsResponse.data));
     setProducts(productApi.normalizeList(productsResponse.data));
@@ -54,8 +50,6 @@ function AdminDashboard() {
   useEffect(() => {
     loadData().catch(() => pushToast("Unable to load admin dashboard.", "error"));
   }, [pushToast]);
-
-  const chartMax = useMemo(() => Math.max(...growth.map((item) => item.total), 1), [growth]);
 
   const addProduct = async (event) => {
     event.preventDefault();
@@ -105,22 +99,6 @@ function AdminDashboard() {
         <Metric title="Revenue (Month)" value={`Rs ${dashboard?.revenue_this_month || "0.00"}`} />
         <Metric title="Revenue (Total)" value={`Rs ${dashboard?.revenue_total || "0.00"}`} />
         <Metric title="Most Demanded" value={dashboard?.most_demanded_product || "-"} />
-      </section>
-
-      <section className="card-surface p-5">
-        <h2 className="font-serif text-2xl text-black">Subscription Growth</h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-6">
-          {growth.map((item) => (
-            <div key={item.month} className="rounded-xl border border-[#EAEAEA] bg-white p-3 text-center">
-              <div
-                className="mx-auto mb-2 w-8 rounded-t bg-lightBlue"
-                style={{ height: `${Math.max(12, (item.total / chartMax) * 90)}px` }}
-              />
-              <p className="text-xs text-[#333333]">{item.month}</p>
-              <p className="text-sm font-semibold text-black">{item.total}</p>
-            </div>
-          ))}
-        </div>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">

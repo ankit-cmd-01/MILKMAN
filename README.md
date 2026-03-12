@@ -36,6 +36,15 @@ Backend URL: http://127.0.0.1:8000
 
 ---
 
+## Azure VM deployment
+
+- Use the deployment bundle in `deploy/azure-vm/` for an Ubuntu-based Azure VM with `Nginx + Gunicorn + Django + built Vite frontend`.
+- Copy `backend/.env.example` to `backend/.env` and `frontend/.env.example` to `frontend/.env` before deploying.
+- Run `deploy/azure-vm/scripts/deploy_backend.sh` and `deploy/azure-vm/scripts/build_frontend.sh` on the VM after cloning the repo.
+- Final wiring steps are documented in `deploy/azure-vm/README.md`.
+
+---
+
 ## 🔐 Demo Login Credentials
 
 **Admin**  

@@ -1,0 +1,15 @@
+[Unit]
+Description=MilkMan Django Backend
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/milkman/backend
+EnvironmentFile=/var/www/milkman/backend/.env
+ExecStart=/var/www/milkman/backend/.venv/bin/gunicorn --config /var/www/milkman/backend/gunicorn.conf.py milkman_backend.wsgi:application
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

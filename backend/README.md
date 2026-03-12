@@ -59,6 +59,14 @@ backend/
    python manage.py runserver
    ```
 
+## Production on a VM
+- Copy `backend/.env.example` to `backend/.env` and replace the placeholder values.
+- Use `gunicorn.conf.py` with Gunicorn on Linux:
+  ```bash
+  gunicorn --config gunicorn.conf.py milkman_backend.wsgi:application
+  ```
+- For an Azure VM deployment with Nginx and systemd, use the files in `deploy/azure-vm/`.
+
 ## Demo credentials
 - Admin (superuser):
   - Email: `ankits@gmail.com`
@@ -136,4 +144,3 @@ Login response includes:
 - One-time cart limits to 5 unique products.
 - Revenue analytics computed from successful payments.
 - Role-based API protection for admin/customer routes.
-

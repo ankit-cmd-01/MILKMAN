@@ -3,20 +3,22 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 
+const createInitialForm = () => ({
+  email: "",
+  password: "",
+  confirm_password: "",
+  first_name: "",
+  last_name: "",
+  phone_number: "",
+  address: "",
+});
+
 function LoginModal() {
   const { isLoginModalOpen, setIsLoginModalOpen, login, register } = useAuth();
   const { pushToast } = useToast();
   const [tab, setTab] = useState("login");
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-    confirm_password: "",
-    first_name: "",
-    last_name: "",
-    phone_number: "",
-    address: "",
-  });
+  const [form, setForm] = useState(createInitialForm);
 
   if (!isLoginModalOpen) return null;
 
@@ -24,8 +26,46 @@ function LoginModal() {
     setForm((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
+  const switchTab = (nextTab) => {
+    if (nextTab === tab) return;
+    setTab(nextTab);
+    setLoading(false);
+    if (nextTab === "login") {
+      setForm((prev) => ({
+        ...createInitialForm(),
+        email: prev.email,
+        password: prev.password,
+      }));
+    }
+  };
+
+  const closeModal = () => {
+    setIsLoginModalOpen(false);
+    setTab("login");
+    setLoading(false);
+    setForm(createInitialForm());
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!form.email.trim() || !form.password) {
+      pushToast("Email and password are required.", "error");
+      return;
+    }
+
+    if (tab === "register") {
+      if (!form.confirm_password) {
+        pushToast("Please confirm your password.", "error");
+        return;
+      }
+
+      if (form.password !== form.confirm_password) {
+        pushToast("Passwords do not match.", "error");
+        return;
+      }
+    }
+
     setLoading(true);
     try {
       if (tab === "login") {
@@ -35,6 +75,10 @@ function LoginModal() {
         await register(form);
         pushToast("Registration successful. Please login.", "success");
         setTab("login");
+        setForm((prev) => ({
+          ...createInitialForm(),
+          email: prev.email,
+        }));
       }
     } catch (error) {
       const detail = error.response?.data?.detail || "Authentication failed.";
@@ -51,7 +95,11 @@ function LoginModal() {
           <h2 className="font-serif text-2xl font-bold text-black">
             {tab === "login" ? "Login to MilkMan" : "Create Account"}
           </h2>
-          <button onClick={() => setIsLoginModalOpen(false)} className="text-xl text-[#333333]">
+          <button
+            type="button"
+            onClick={closeModal}
+            className="text-xl text-[#333333]"
+          >
             x
           </button>
         </div>
@@ -59,21 +107,23 @@ function LoginModal() {
         <div className="mb-4 flex rounded-xl border border-[#EAEAEA] p-1">
           <button
             type="button"
-            onClick={() => setTab("login")}
-            className={`flex-1 rounded-lg py-2 text-sm font-semibold transition ${tab === "login" ? "bg-primary text-white" : "text-[#333333]"}`}
+            onClick={() => switchTab("login")}
+            className={`auth-tab-button ${tab === "login" ? "auth-tab-button-active" : "auth-tab-button-inactive"}`}
+            aria-pressed={tab === "login"}
           >
             Login
           </button>
           <button
             type="button"
-            onClick={() => setTab("register")}
-            className={`flex-1 rounded-lg py-2 text-sm font-semibold transition ${tab === "register" ? "bg-primary text-white" : "text-[#333333]"}`}
+            onClick={() => switchTab("register")}
+            className={`auth-tab-button ${tab === "register" ? "auth-tab-button-active" : "auth-tab-button-inactive"}`}
+            aria-pressed={tab === "register"}
           >
             Register
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <form key={tab} onSubmit={handleSubmit} noValidate className="space-y-3">
           <input
             name="email"
             type="email"
